@@ -4,7 +4,7 @@
 
   margin = {
     top: 20,
-    right: 120,
+    right: 20,
     bottom: 30,
     left: 80
   };
@@ -44,7 +44,7 @@
   svg = d3.select("body").append("svg").attr("width", svgWidth).attr("height", svgHeight).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   d3.csv("data.csv", function(err, data) {
-    var areas, d, legend, region, regionNames, regions, yMax, _i, _j, _len, _len1;
+    var d, legend, region, regionNames, regions, yMax, _i, _j, _len, _len1;
     if (err) {
       d3.select("body").append("div").text("Error: " + err);
       return;
@@ -81,8 +81,7 @@
       });
     });
     y.domain([yMin, yMax]).nice();
-    areas = svg.selectAll(".region").data(regions).enter().append("g").attr("class", "region");
-    areas.append("path").attr("class", "area").attr("d", function(d) {
+    svg.selectAll(".region").data(regions).enter().append("path").attr("class", "region").attr("d", function(d) {
       return area(d.values);
     }).style("fill", function(d) {
       return color(d.name);
@@ -95,22 +94,6 @@
     });
     legend.append("text").attr("class", "name").attr("x", 12).attr("y", 9).text(function(d) {
       return d;
-    });
-    areas.append("text").datum(function(d) {
-      var value;
-      value = d.values[d.values.length - 1];
-      return {
-        name: d.name,
-        year: value.year,
-        value: value.y0 + value.y / 2
-      };
-    }).attr("transform", function(d) {
-      var t;
-      t = "translate(" + (x(d.year)) + "," + (y(d.value)) + ")";
-      console.log(d, t);
-      return t;
-    }).attr("x", 2).attr("dy", "0.35em").text(function(d) {
-      return d.name;
     });
     svg.append("g").attr("class", "x axis").attr("transform", "translate(0," + height + ")").call(xAxis);
     return svg.append("g").attr("class", "y axis").call(yAxis);
