@@ -25,6 +25,7 @@ color = d3.scale.category20()
 xAxis = d3.svg.axis()
   .scale x
   .orient "bottom"
+  .tickFormat (d) -> d
 
 yAxis = d3.svg.axis()
   .scale y
