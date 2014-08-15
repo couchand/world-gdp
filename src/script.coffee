@@ -2,7 +2,7 @@
 
 margin =
   top:    20
-  right:  120
+  right:  20
   bottom: 30
   left:   80
 
@@ -76,14 +76,11 @@ d3.csv "data.csv", (err, data) ->
   y.domain [yMin, yMax]
     .nice()
 
-  areas = svg.selectAll ".region"
+  svg.selectAll ".region"
     .data regions
     .enter()
-    .append "g"
+    .append "path"
     .attr "class", "region"
-
-  areas.append "path"
-    .attr "class", "area"
     .attr "d", (d) -> area d.values
     .style "fill", (d) -> color d.name
 
@@ -108,20 +105,6 @@ d3.csv "data.csv", (err, data) ->
     .attr "x", 12
     .attr "y", 9
     .text (d) -> d
-
-  areas.append "text"
-    .datum (d) ->
-      value = d.values[d.values.length - 1]
-      name: d.name
-      year: value.year
-      value: value.y0 + value.y / 2
-    .attr "transform", (d) ->
-      t="translate(#{x d.year},#{y d.value})"
-      console.log d,t
-      t
-    .attr "x", 2
-    .attr "dy", "0.35em"
-    .text (d) -> d.name
 
   svg.append "g"
     .attr "class", "x axis"
