@@ -25,7 +25,9 @@
 
   color = d3.scale.category20();
 
-  xAxis = d3.svg.axis().scale(x).orient("bottom");
+  xAxis = d3.svg.axis().scale(x).orient("bottom").tickFormat(function(d) {
+    return d;
+  });
 
   yAxis = d3.svg.axis().scale(y).orient("left").tickFormat(y.tickFormat(3, "$,f"));
 
